@@ -45,6 +45,22 @@ URI         = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
 class Venturi {
 	has $!scheme;
 
+	method new ( :$scheme is copy --> Venturi:D ) {
+		my $subclass = join '::', 'Venturi', $scheme.lc;
+		put "scheme is $scheme";
+		put "subclass is $subclass";
+		try {
+			CATCH {
+				default { fail "No Venturi handler for $scheme: $_" }
+				}
+			require ::($subclass);
+			}
+		my $venturi = ::($subclass).new: |%_;
+		put "venturi is {$venturi.^name}";
+
+		$venturi;
+		}
+
 	method not-concrete {
 #		my $b = Backtrace.new;
 #		dd $_ for $b.List;
