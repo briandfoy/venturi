@@ -101,6 +101,6 @@ class Venturi {
 		:$!fragment
 		) { }
 
-	method Str (  --> Str:D ) { 'Some URL string' }
-	method gist ( --> Str:D ) { self.Str }
+	method Str (  --> Str:D ) { !!! }
+	method gist ( --> Str:D ) { !!! }
 	}
