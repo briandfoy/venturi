@@ -61,6 +61,18 @@ class Venturi {
 		--> Venturi
 		) {
 
+	method not-concrete {
+#		my $b = Backtrace.new;
+#		dd $_ for $b.List;
+		#say "Backtrace has {$b.elems} elements";
+		fail "{Backtrace.new.[*-3].subname} is not implemented for {self.^name}";
+		}
+	method authority { self.not-concrete }
+	method userinfo  { self.not-concrete }
+	method path      { self.not-concrete }
+	method query     { self.not-concrete }
+	method keywords  { self.not-concrete }
+	method fragment  { self.not-concrete }
 		$scheme   = Venturi::Scheme   if $scheme   ~~ Any;
 		$path     = Venturi::Path     if $path     ~~ Any;
 		$query    = Venturi::Query    if $query    ~~ Any;
