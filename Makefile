@@ -1,3 +1,3 @@
 .PHONY: test
 test:
-	prove -e 'perl6 -Ilib' t
+	prove -r -e 'perl6 -Ilib' t
