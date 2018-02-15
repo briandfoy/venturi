@@ -4,7 +4,6 @@ need Venturi::Path;
 need Venturi::Query;
 need Venturi::Fragment;
 need Venturi::Keywords;
-need Venturi::Schemes;
 
 class Venturi {
 	has Venturi::Authority $!authority;
