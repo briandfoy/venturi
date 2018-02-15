@@ -45,6 +45,7 @@ class Venturi::Port {
 
 	method port-range ( *%_ () --> Range:D ) { self.minimum-port .. self.maximum-port }
 
-	method Str  ( *%_ () --> Str:D ) { ~ $!port }
-	method gist ( *%_ () --> Str:D ) { self.Str }
+	method Numeric ( *%_ () --> Int:D ) { $!port   }
+	method Str     ( *%_ () --> Str:D ) { ~ $!port }
+	method gist    ( *%_ () --> Str:D ) { self.Str }
 	}
