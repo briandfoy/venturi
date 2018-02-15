@@ -1,5 +1,7 @@
+need Venturi;
+
 class Venturi::mailto is Venturi {
-	has Str:D $!scheme is ro = 'mailto';
-
-
+	method scheme           { 'ftp' }
+	method default-port     { state $p = Venturi::Port::Unix.new: 21; $p }
+	method default-path     { '/' }
 	}
