@@ -4,10 +4,11 @@ need Venturi::Port::Unix;
 class Venturi::ftp is Venturi {
 	has $.host;
 	has $.port;
+	has $.path;
 
 	method scheme           { 'ftp' }
 	method default-port     { state $p = Venturi::Port::Unix.new: 21; $p }
-	method default-path     { '/' }
+	method default-path     { state $p = Venturi::Path.new: '/'; $p }
 
 	proto method new (|) {*}
 	multi method new ( *%args --> Venturi::ftp:D ) {
@@ -16,6 +17,7 @@ class Venturi::ftp is Venturi {
 	submethod BUILD ( :$!host, :$!port ) {
 		$!host := Venturi::Host.new: $!host if $!host.defined;
 		$!port := $!port.defined ?? Venturi::Port::Unix.new( $!port ) !! self.default-port;
+		$!path := $!path.defined ?? Venturi::Path.new( $!path ) !! self.default-path;
 		}
 
 	method Str (  --> Str:D ) {
