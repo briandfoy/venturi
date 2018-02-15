@@ -86,20 +86,8 @@ class Venturi {
 			}
 
 
-		self.bless:
-			:$scheme, :$authority, :$path,
-			:$query, :$keywords, :$fragment
-			;
 		}
 
-	submethod BUILD (
-		#:$!scheme,
-		:$!authority,
-		:$!path,
-		:$!query,
-		:$!keywords,
-		:$!fragment
-		) { }
 
 	method Str (  --> Str:D ) { !!! }
 	method gist ( --> Str:D ) { !!! }
