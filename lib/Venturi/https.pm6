@@ -1,6 +1,7 @@
+need Venturi::http;
+need Venturi::Port::Unix;
+
 class Venturi::https is Venturi::http {
-	has Str:D $!scheme is ro = 'https';
-	has Int:D $!default-port is ro = 443;
-
-
+	method scheme           { 'https' }
+	method default-port     { state $p = Venturi::Port::Unix.new: 443; $p }
 	}
