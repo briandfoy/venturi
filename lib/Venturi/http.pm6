@@ -1,4 +1,6 @@
 need Venturi;
+need Venturi::Path;
+need Venturi::Fragment;
 need Venturi::Port::Unix;
 
 class Venturi::http is Venturi {

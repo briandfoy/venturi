@@ -1,5 +1,6 @@
 need Venturi::Host;
 need Venturi::Port;
+need Venturi::Port::Unix;
 
 class Venturi::Authority {
 	has Venturi::Host $!host;
