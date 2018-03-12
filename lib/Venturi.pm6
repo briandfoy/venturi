@@ -59,9 +59,6 @@ class Venturi {
 		}
 
 	method not-concrete {
-#		my $b = Backtrace.new;
-#		dd $_ for $b.List;
-		#say "Backtrace has {$b.elems} elements";
 		fail "{Backtrace.new.[*-3].subname} is not implemented for {self.^name}";
 		}
 	method authority { self.not-concrete }
