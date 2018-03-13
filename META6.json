@@ -3,7 +3,9 @@
     "brian d foy"
   ],
   "build-depends" : [ ],
-  "depends" : [ ],
+  "depends" : [
+  	'JSON::Fast',
+  	],
   "description" : "",
   "license" : "Artistic-2.0",
   "name" : "URI",
