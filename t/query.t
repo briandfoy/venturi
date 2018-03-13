@@ -306,7 +306,9 @@ subtest 'json', {
 
 	ok $q.DEFINITE, "It's an object";
 
-	note( $q.json )
+	note( $q.json );
+
+	note( $q.json: :compact )
 	}
 
 done-testing();

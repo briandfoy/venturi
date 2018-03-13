@@ -127,10 +127,11 @@ class Venturi::Query {
 		%new-hash;
 		}
 
-	method json ( *%_ () --> Str:D ) {
+	method json ( :$compact = False, *%_ () --> Str:D ) {
 		my %hash = self.Hash;
 		use JSON::Fast;
-		to-json( %hash );
+		do if $compact { to-json( %hash, :!pretty ) }
+		   else { to-json( %hash ) }
 		}
 
 	sub encode-pair ( Str:D $k, Str:D $v, *%_ () --> Str ) {
