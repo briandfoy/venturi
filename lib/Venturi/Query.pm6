@@ -126,7 +126,7 @@ class Venturi::Query {
 		}
 
 	method json ( *%_ () --> Str:D ) {
-		my Hash:D %hash = self.Hash;
+		my %hash = self.Hash;
 		use JSON::Fast;
 		to-json( %hash );
 		}
