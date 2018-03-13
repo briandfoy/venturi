@@ -272,14 +272,20 @@ subtest 'gist', {
 subtest 'Hash', {
 	can-ok $class, $_ for <from-hash Hash>;
 
-	my %hash = %(
+	my %params = %(
 		'Hamadryas' => 'perlicus',
 		'Juonia'    => [ <foo bar baz> ],
 		);
 
-	my $q = $class.from-hash( %hash );
+	my $q = $class.from-hash( %params );
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
+
+	my $hash = $q.Hash;
+	isa-ok $hash, 'Hash', 'Assigning to scalar returns a hash';
+
+	my %hash = $q.Hash;
+	isa-ok %hash, 'Hash', 'Assigning to a hash returns a hash';
 
 	note( $q.gist )
 	}
@@ -287,13 +293,17 @@ subtest 'Hash', {
 subtest 'json', {
 	can-ok $class, $_ for <from-hash json>;
 
-	my %hash = %(
+	my %params = %(
 		'Hamadryas' => 'perlicus',
 		'Juonia'    => [ <foo bar baz> ],
 		);
 
-	my $q = $class.from-hash( %hash );
+	my $q = $class.from-hash( %params );
 	isa-ok $q, $class;
+
+	my %hash = $q.Hash;
+	isa-ok %hash, 'Hash', '.Hash returns a hash';
+
 	ok $q.DEFINITE, "It's an object";
 
 	note( $q.json )
