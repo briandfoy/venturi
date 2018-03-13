@@ -7,7 +7,9 @@
 
 # AppVeyor environment variables: https://www.appveyor.com/docs/environment-variables/
 
-os: Visual Studio 2015
+image:
+- Visual Studio 2015
+- Ubuntu
 
 platform: x64
 
@@ -17,8 +19,8 @@ platform: x64
 # If the build is successful, AppVeyor caches these files and
 # directories for future builds
 cache:
-    - C:\Strawberry -> .appveyor_clear_cache.txt
-    - C:\Rakudo -> .appveyor_clear_cache.txt
+    - cmd: C:\Strawberry -> .appveyor_clear_cache.txt
+    - cmd: C:\Rakudo -> .appveyor_clear_cache.txt
 
 branches:
   only:
@@ -44,15 +46,24 @@ install:
   # Strawberry Perl comes with `prove`, which we use to run the tests.
   # http://strawberryperl.com
   # https://chocolatey.org/packages/StrawberryPerl
-  - if not exist "C:\Strawberry" cinst strawberryperl
-  - SET PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;%PATH%
-  - ps: refreshenv
+  - cmd: if not exist "C:\Strawberry" cinst strawberryperl
+  - cmd: SET PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;%PATH%
+  - cmd: ps: refreshenv
   - perl -v
   # Install Rakudo Star with chocolately.
   # https://chocolatey.org/packages/rakudostar
-  - if not exist "C:\Rakudo" cinst rakudostar
-  - SET PATH=C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;%PATH%
-  - ps: refreshenv
+  - cmd: if not exist "C:\Rakudo" cinst rakudostar
+  - cmd: SET PATH=C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;%PATH%
+  - cmd: ps: refreshenv
+  - sh: apt-get install build-essential git libssl-dev
+  - sh: apt-get install -y perl
+  - sh: mkdir ~/rakudo && cd $_
+  - sh: curl -O https://rakudo.perl6.org/downloads/star/rakudo-star-2018.01.tar.gz
+  - sh: tar -xvzf rakudo-star-2018.01.tar.gz
+  - sh: cd rakudo-star-2018.01/
+  - sh: perl Configure.pl --backend=moar --gen-moar
+  - sh: make install
+  - sh: export PATH=$(pwd)/install/bin/:$(pwd)/install/share/perl6/site/bin:\$PATH"
   - perl6 -v
 
 build: off
