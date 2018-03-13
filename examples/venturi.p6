@@ -1,6 +1,6 @@
 #!/Applications/Rakudo/bin/perl6
 
-use lib </Users/brian/Desktop/URI.d/lib>;
+use lib $*PROGRAM.parent.parent.child( 'lib' );
 need Venturi;
 
 {
