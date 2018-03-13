@@ -8,7 +8,7 @@ class Venturi::http is Venturi {
 	has $!port;
 	has $!path;
 	has $!fragment;
-	has %!query;
+	has $.query;
 
 	method scheme           { 'http' }
 	method default-port     { state $p = Venturi::Port::Unix.new: 80; $p }
@@ -19,11 +19,17 @@ class Venturi::http is Venturi {
 	multi method new ( *%args --> Venturi::http:D ) {
 		self.bless: |%args;
 		}
-	submethod BUILD ( :$!host, :$!port, :$!path, :$!fragment ) {
+	submethod BUILD ( :$!host, :$!port, :$!path, :$!fragment, :%form-hash ) {
 		$!host     := Venturi::Host.new: $!host if $!host.defined;
 		$!port     := $!port.defined ?? Venturi::Port::Unix.new( $!port ) !! self.default-port;
 		$!path     := $!path.defined ?? Venturi::Path.new( $!path ) !! self.default-path;
 		$!fragment := $!fragment.defined ?? Venturi::Fragment.new( $!fragment.Str ) !! self.default-fragment;
+
+		if defined %form-hash {
+			note "Form is defined";
+			my $q = Venturi::Query.from-hash( %form-hash );
+			$!query = $q;
+			}
 		}
 
 	multi method port ( --> Venturi::Port::Unix:D ) { $!port }
@@ -51,6 +57,7 @@ class Venturi::http is Venturi {
 			( (self.port // -1) == self.default-port ?? '' !! ":{self.port}" ),
 			( self.path.defined ?? self.path !! self.default-path ),
 			( self.fragment.defined ?? "#{self.fragment}" !! '' ),
+			( self.query.has-params ?? "?{self.query.Str}" !! '' ),
 		}
 
 	method gist ( --> Str:D ) { self.Str }
