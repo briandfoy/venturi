@@ -2,7 +2,7 @@
 
 # The Perl 6 Venturi module
 
-Create URIs.
+Create URIs, mostly because I need to be able to manipulate query strings.
 
 ## Installation
 
