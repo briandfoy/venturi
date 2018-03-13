@@ -111,7 +111,7 @@ class Venturi::Query {
 		my %new-hash;
 		for %!query.keys -> $param {
 			if %!query{$param}.elems == 1 {
-				%new-hash{$param} = %!query{$param}.clone;
+				%new-hash{$param} = %!query{$param}.[0].clone;
 				}
 			elsif %!query{$param}.elems > 1 {
 				%new-hash{$param} = [];
