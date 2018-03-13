@@ -1,6 +1,7 @@
 class Venturi::Query {
+	my $default-separator := ';';
 	has %!query;
-	has $!separator = ';';
+	has $.separator is rw = $default-separator;
 
 	method from-hash ( %args --> Venturi::Query ) {
 		my $query = self.new;
@@ -15,7 +16,9 @@ class Venturi::Query {
 		}
 
 	multi method clear ( --> Bool:D ) { %!query = %(); True }
+
 	multi method clear ( Str:D $param --> Bool:D ) {
+	method default-separator { $default-separator }
 		if self.param-exists( $param ) {
 			%!query{$param} = '';
 			return True;
