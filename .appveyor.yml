@@ -19,8 +19,8 @@ platform: x64
 # If the build is successful, AppVeyor caches these files and
 # directories for future builds
 cache:
-    - cmd: C:\Strawberry -> .appveyor_clear_cache.txt
-    - cmd: C:\Rakudo -> .appveyor_clear_cache.txt
+    - ps: C:\Strawberry -> .appveyor_clear_cache.txt
+    - ps: C:\Rakudo -> .appveyor_clear_cache.txt
 
 branches:
   only:
@@ -40,22 +40,23 @@ environment:
     HARNESS_VERBOSE: 0
     HARNESS_TIMER: 1
     HARNESS_PERL_SWITCHES: -MDevel::Cover
+    APPVEYOR_YML_DISABLE_PS_LINUX: true
 
 install:
   # Install Strawberry Perl with chocolately.
   # Strawberry Perl comes with `prove`, which we use to run the tests.
   # http://strawberryperl.com
   # https://chocolatey.org/packages/StrawberryPerl
-  - cmd: if not exist "C:\Strawberry" cinst strawberryperl
-  - cmd: SET PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;%PATH%
+  - ps: if not exist "C:\Strawberry" cinst strawberryperl
+  - ps: SET PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;%PATH%
   - ps: refreshenv
   - sh: apt-get install build-essential git libssl-dev
   - sh: apt-get install -y perl
   - perl -v
   # Install Rakudo Star with chocolately.
   # https://chocolatey.org/packages/rakudostar
-  - cmd: if not exist "C:\Rakudo" cinst rakudostar
-  - cmd: SET PATH=C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;%PATH%
+  - ps: if not exist "C:\Rakudo" cinst rakudostar
+  - ps: SET PATH=C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;%PATH%
   - ps: refreshenv
   - sh: mkdir rakudo && cd $_
   - sh: curl -O https://rakudo.perl6.org/downloads/star/rakudo-star-2018.01.tar.gz
