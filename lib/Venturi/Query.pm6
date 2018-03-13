@@ -45,6 +45,7 @@ class Venturi::Query {
 		fail "No key <$param> in query";
 		}
 
+	method has-params     ( *%_ () --> Bool:D ) { %!query.elems ?? True !! False }
 	method param-exists   ( Str:D $key, *%_ () --> Bool:D ) { %!query{$key}:exists }
 	method elems          ( *%_ () --> Int:D ) { %!query.elems }
 	method params         ( *%_ () ) { %!query.keys.sort }
@@ -59,7 +60,6 @@ class Venturi::Query {
 	method Bool ( *%_ () --> Bool:D ) {
 		self.elems ?? True !! False;
 		}
-
 	method Numeric ( *%_ () --> Failure:D ) {
 		fail "Method Numeric doesn't work for { $?CLASS.^name }";
 		}
