@@ -48,16 +48,16 @@ install:
   # https://chocolatey.org/packages/StrawberryPerl
   - cmd: if not exist "C:\Strawberry" cinst strawberryperl
   - cmd: SET PATH=C:\strawberry\c\bin;C:\strawberry\perl\site\bin;C:\strawberry\perl\bin;%PATH%
-  - cmd: ps: refreshenv
+  - ps: refreshenv
+  - sh: apt-get install build-essential git libssl-dev
+  - sh: apt-get install -y perl
   - perl -v
   # Install Rakudo Star with chocolately.
   # https://chocolatey.org/packages/rakudostar
   - cmd: if not exist "C:\Rakudo" cinst rakudostar
   - cmd: SET PATH=C:\rakudo\bin;C:\rakudo\share\perl6\site\bin;%PATH%
-  - cmd: ps: refreshenv
-  - sh: apt-get install build-essential git libssl-dev
-  - sh: apt-get install -y perl
-  - sh: mkdir ~/rakudo && cd $_
+  - ps: refreshenv
+  - sh: mkdir rakudo && cd $_
   - sh: curl -O https://rakudo.perl6.org/downloads/star/rakudo-star-2018.01.tar.gz
   - sh: tar -xvzf rakudo-star-2018.01.tar.gz
   - sh: cd rakudo-star-2018.01/
