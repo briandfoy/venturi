@@ -296,7 +296,7 @@ subtest 'json', {
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	note( $q.gist )
+	note( $q.json )
 	}
 
 done-testing();
