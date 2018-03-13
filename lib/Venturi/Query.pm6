@@ -123,6 +123,8 @@ class Venturi::Query {
 				%new-hash{$param} = ''
 				}
 			}
+
+		%new-hash;
 		}
 
 	method json ( *%_ () --> Str:D ) {
