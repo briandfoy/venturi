@@ -133,7 +133,6 @@ class Venturi::Query {
 		to-json( %hash );
 		}
 
-
 	sub encode-pair ( Str:D $k, Str:D $v, *%_ () --> Str ) {
 		encode($k) ~ '=' ~ encode($v)
 		}
