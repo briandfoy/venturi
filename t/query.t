@@ -130,6 +130,46 @@ subtest 'two-keys-one-value', {
 	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus', 'Query string is correct'
 	}
 
+subtest 'change-separator', {
+	my @keys  = <Hamadryas Juonia>.sort;
+	my $value = 'perlicus';
+
+	can-ok $class, $_ for <add separator Str>;
+
+	my $q = $class.new;
+	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
+	$q.add( $_, $value ) for @keys;
+
+	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
+		'Query string with default separator is correct';
+
+	$q.separator = '&';
+	is ~$q, 'Hamadryas=perlicus&Juonia=perlicus',
+		'Query string with chosen separator is correct';
+
+	$q.separator = $q.default-separator;
+	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
+		'Query string with restored default separator is correct';
+	}
+
+subtest 'new-with-separator', {
+	my @keys  = <Hamadryas Juonia>.sort;
+	my $value = 'perlicus';
+
+	can-ok $class, $_ for <new add Str>;
+
+	my $q = $class.new: :separator('#');
+	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
+	$q.add( $_, $value ) for @keys;
+
+	is ~$q, 'Hamadryas=perlicus#Juonia=perlicus',
+		'Query string with constructor-specified separator is correct';
+	}
+
 subtest 'two-keys-remove-one', {
 	my @keys  = <Hamadryas Juonia>.sort;
 	my $value = 'perlicus';
