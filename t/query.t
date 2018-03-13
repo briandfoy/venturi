@@ -178,6 +178,8 @@ subtest 'two-keys-remove-one', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $_, $value ) for @keys;
 
 	is $q.elems,      2,   'Has two elements';
@@ -202,6 +204,7 @@ subtest 'from-hash', {
 
 	my $q = $class.from-hash( %hash );
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
 
 	is $q.params.elems, 2, 'Has the right number of keys';
 	}
@@ -216,17 +219,84 @@ subtest 'from-hash-with-array', {
 
 	my $q = $class.from-hash( %hash );
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
 
 	is $q.params.elems, 2, 'Has the right number of keys';
+	}
+
+subtest 'Str', {
+	can-ok $class, $_ for <from-hash Str>;
+
+	my %hash = %(
+		'Hamadryas' => 'perlicus',
+		'Juonia'    => [ <foo bar baz> ],
+		);
+
+	my $q = $class.from-hash( %hash );
+	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
+	note $q.Str;
+	}
+
+subtest 'www-form-encoded', {
+	can-ok $class, $_ for <from-hash www-form-urlencoded Str>;
+
+	my %hash = %(
+		'Hamadryas' => 'perlicus',
+		'Juonia'    => [ <foo bar baz> ],
+		);
+
+	my $q = $class.from-hash( %hash );
+	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
+	is $q.Str, $q.www-form-urlencoded, 'Str is the same as www-form-urlencoded';
+	}
+
+subtest 'gist', {
+	can-ok $class, $_ for <from-hash gist>;
+
+	my %hash = %(
+		'Hamadryas' => 'perlicus',
+		'Juonia'    => [ <foo bar baz> ],
+		);
+
+	my $q = $class.from-hash( %hash );
+	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
+	note( $q.gist )
+	}
+
+subtest 'Hash', {
+	can-ok $class, $_ for <from-hash Hash>;
+
+	my %hash = %(
+		'Hamadryas' => 'perlicus',
+		'Juonia'    => [ <foo bar baz> ],
+		);
+
+	my $q = $class.from-hash( %hash );
+	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
+	note( $q.gist )
+	}
+
+subtest 'json', {
+	can-ok $class, $_ for <from-hash json>;
+
+	my %hash = %(
+		'Hamadryas' => 'perlicus',
+		'Juonia'    => [ <foo bar baz> ],
+		);
+
+	my $q = $class.from-hash( %hash );
+	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
+	note( $q.gist )
 	}
 
 done-testing();
-	ok $q.DEFINITE, "It's an object";
-	ok $q.DEFINITE, "It's an object";
-	ok $q.DEFINITE, "It's an object";
