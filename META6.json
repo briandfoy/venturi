@@ -4,7 +4,7 @@
   ],
   "build-depends" : [ ],
   "depends" : [
-  	'JSON::Fast'
+  	"JSON::Fast"
   	],
   "description" : "",
   "license" : "Artistic-2.0",
