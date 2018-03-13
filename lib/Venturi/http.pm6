@@ -8,6 +8,7 @@ class Venturi::http is Venturi {
 	has $!port;
 	has $!path;
 	has $!fragment;
+	has %!query;
 
 	method scheme           { 'http' }
 	method default-port     { state $p = Venturi::Port::Unix.new: 80; $p }
@@ -36,6 +37,7 @@ class Venturi::http is Venturi {
 	multi method path ( --> Venturi::Path:D ) { $!path }
 	multi method path ( Any:D $new-path --> Venturi::Path:D ) {
 		my $old-path = $!path;
+
 		$!path := $new-path ~~ Venturi::Path
 			?? $new-path !! Venturi::Path.new: $new-path;
 		$old-path;
