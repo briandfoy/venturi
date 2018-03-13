@@ -40,7 +40,7 @@ class Venturi::Query {
 		%!query{$param} = @keep;
 		}
 
-	method value-for    ( Str:D $param, *%_ () ) {
+	method value-for ( Str:D $param, *%_ () ) {
 		return %!query{$param} if self.param-exists: $param;
 		fail "No key <$param> in query";
 		}
