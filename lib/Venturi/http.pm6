@@ -5,9 +5,9 @@ need Venturi::Port::Unix;
 
 class Venturi::http is Venturi {
 	has $.host;
-	has $.port;
-	has $.path;
-	has $.fragment;
+	has $!port;
+	has $!path;
+	has $!fragment;
 
 	method scheme           { 'http' }
 	method default-port     { state $p = Venturi::Port::Unix.new: 80; $p }
