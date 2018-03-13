@@ -45,3 +45,13 @@ my $url = Venturi.new:
 	;
 put $url;
 }
+
+{
+put 'mailto', '-' x 50;
+my $url  = Venturi.new:
+	:scheme('mailto'),
+	:user('hamadryas'),
+	:host('www.example.com'),
+	;
+put $url;
+}
