@@ -3,7 +3,9 @@ class Venturi::Path {
 
 	proto method new (|) {*}
 	multi method new ( Any:D $path, *%_ () --> Venturi::Path:D ) {
-		self.bless: :path($path.Str);
+		my $str = $path.Str;
+		$str = "/$str" unless $str ~~ /^ '/' /;
+		self.bless: :path($str);
 		}
 	submethod BUILD ( :$!path ) { }
 
