@@ -12,6 +12,7 @@ subtest 'nothing', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
 	}
 
 subtest 'one-key-one-value', {
@@ -22,6 +23,8 @@ subtest 'one-key-one-value', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $key, $value );
 
 	is $q.elems,      1,   'Has one element';
@@ -42,6 +45,8 @@ subtest 'one-key-clear-all', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $key, $value );
 
 	is $q.elems,      1,   'Has one element';
@@ -66,6 +71,8 @@ subtest 'one-utf8-key-one-value', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $key, $value );
 
 	is $q.elems,      1,   'Has one element';
@@ -86,6 +93,8 @@ subtest 'one-key-two-values', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $key, $_ ) for @values;
 
 	is $q.elems,      1,   'Has one element';
@@ -106,6 +115,8 @@ subtest 'two-keys-one-value', {
 
 	my $q = $class.new;
 	isa-ok $q, $class;
+	ok $q.DEFINITE, "It's an object";
+
 	$q.add( $_, $value ) for @keys;
 
 	is $q.elems,      2,   'Has two elements';
@@ -167,6 +178,15 @@ subtest 'from-hash-with-array', {
 	isa-ok $q, $class;
 
 	is $q.params.elems, 2, 'Has the right number of keys';
+	ok $q.DEFINITE, "It's an object";
+
+	ok $q.DEFINITE, "It's an object";
+
+	ok $q.DEFINITE, "It's an object";
+
 	}
 
 done-testing();
+	ok $q.DEFINITE, "It's an object";
+	ok $q.DEFINITE, "It's an object";
+	ok $q.DEFINITE, "It's an object";
