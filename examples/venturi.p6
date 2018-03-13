@@ -33,6 +33,7 @@ put 'https ', '-' x 50;
 my $url = Venturi.new:
 	:scheme('https'),
 	:host('www.example.com'),
+	:path('dir/dir2/foo' ),
 	;
 put $url;
 }
