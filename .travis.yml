@@ -3,8 +3,9 @@ before_install:
 # https://docs.travis-ci.com/user/installing-dependencies/#Installing-Packages-without-an-APT-Repository
 before_install:
   - uname -a
-  - wget https://nxadm.github.io/rakudo-pkg/latest-release.html?os=ubuntu&version=14.04&arch=amd64
-  - sudo dpkg -i rakudo-pkg-Ubuntu14.04_2018.02.1-01_amd64.deb
+  - wget -O rakudo.deb https://nxadm.github.io/rakudo-pkg/latest-release.html?os=ubuntu&version=14.04&arch=amd64
+  - ls -l
+  - sudo dpkg -i rakudo.deb
   - git clone https://github.com/ugexe/zef.git && cd zef && perl6 -Ilib bin/zef install .
 
 install:
