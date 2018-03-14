@@ -11,16 +11,12 @@ class Venturi::Port {
 		Int:D $port where self.minimum-port <= * <= self.maximum-port,
 		*%_ ()
 		--> Venturi::Port:D
-		) {
-			self.bless: :$port;
-			}
+		) { self.bless: :$port }
 	multi method new (
 		Str:D $port where { val($^a) ~~ Int:D },
 		*%_ ()
 		--> Venturi::Port:D
-		) {
-			self.new: $port.Int
-			}
+		) { self.new: $port.Int }
 
     submethod BUILD( :$!port ) { }
 
