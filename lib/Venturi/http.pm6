@@ -33,7 +33,6 @@ class Venturi::http is Venturi {
 		$!fragment := $!fragment.defined ?? Venturi::Fragment.new( $!fragment.Str ) !! self.default-fragment;
 
 		if defined %form-hash {
-			note "Form is defined";
 			my $q = Venturi::Query.from-hash( %form-hash );
 			$!query = $q;
 			}
