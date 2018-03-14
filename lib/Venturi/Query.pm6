@@ -6,9 +6,9 @@ class Venturi::Query {
 	method from-hash ( %args, *%_ () --> Venturi::Query ) {
 		my $query = self.new;
 		for %args.keys -> $key {
-			next unless %args{$key} ~~ any( Str, Array );
+			next unless %args{$key} ~~ any( Numeric, Str, Array );
 			for %args{$key} -> $value {
-				$query.add( $key, $value );
+				$query.add( $key, ~$value );
 				}
 			}
 
