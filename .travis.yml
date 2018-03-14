@@ -1,8 +1,10 @@
-before_install:
+env:
+  global:
+    - TMPDIR=/tmp
 
 # https://docs.travis-ci.com/user/installing-dependencies/#Installing-Packages-without-an-APT-Repository
 before_install:
-  - uname -a
+  - cd ${TMPDIR}
   # https://github.com/nxadm/rakudo-pkg
   - wget -O rakudo-pkg.deb https://github.com/nxadm/rakudo-pkg/releases/download/v2018.02.1/rakudo-pkg-Ubuntu14.04_2018.02.1-01_amd64.deb
   - ls -l
@@ -16,4 +18,4 @@ install:
   - zef --debug --depsonly install .
 
 script:
-  - prove -v -r -e "perl6 --ll-exception -Ilib"
+  - prove -v -r -e "perl6 --ll-exception -Ilib" t
