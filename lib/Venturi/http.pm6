@@ -19,7 +19,14 @@ class Venturi::http is Venturi {
 	multi method new ( *%args --> Venturi::http:D ) {
 		self.bless: |%args;
 		}
-	submethod BUILD ( :$!host, :$!port, :$!path, :$!fragment, :%form-hash ) {
+	submethod BUILD (
+		:$!host,
+		:$!port,
+		:$!path,
+		:$!fragment,
+		:%form-hash,
+		Str :$param-separator,
+		*%_ () ) {
 		$!host     := Venturi::Host.new: $!host if $!host.defined;
 		$!port     := $!port.defined ?? Venturi::Port::Unix.new( $!port ) !! self.default-port;
 		$!path     := $!path.defined ?? Venturi::Path.new( $!path ) !! self.default-path;
@@ -30,6 +37,11 @@ class Venturi::http is Venturi {
 			my $q = Venturi::Query.from-hash( %form-hash );
 			$!query = $q;
 			}
+		else {
+			$!query = Venturi::Query.new;
+			}
+
+		$!query.separator = $param-separator if defined $param-separator;
 		}
 
 	multi method port ( --> Venturi::Port::Unix:D ) { $!port }
