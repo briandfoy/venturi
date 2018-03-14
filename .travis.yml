@@ -3,6 +3,14 @@ language: perl6
 perl6:
     - latest
 
+before_install:
+  - uname -a
+  - sudo apt-get -qq update
+  - sudo apt-get install -y rakudo-pkg
+
 install:
     - rakudobrew build-zef
     - zef --debug --depsonly install .
+
+script:
+    - prove -v -j$(test-jobs) -e "perl6 --ll-exception -Ilib" $(test-files)
