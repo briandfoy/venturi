@@ -57,8 +57,10 @@ install:
   - sh: sudo dpkg -i rakudo-pkg.deb
   - sh: export PATH=$PATH:~/.perl6/bin:/opt/rakudo-pkg/bin
   - perl6 -v
+  # zef and dependencies
   - sh: git clone https://github.com/ugexe/zef.git && cd zef && perl6 -Ilib bin/zef install .
-  - cd ${APPVEYOR_BUILD_FOLDER}
+  - cmd: cd %APPVEYOR_BUILD_FOLDER%
+  - sh: cd ${APPVEYOR_BUILD_FOLDER}
   - zef --debug --depsonly install .
 
 build: off
@@ -67,7 +69,8 @@ build: off
 #
 # I'd like to run Devel::Cover and submit to Coveralls too.
 test_script:
-  - cd ${APPVEYOR_BUILD_FOLDER}
+  - cmd: cd %APPVEYOR_BUILD_FOLDER%
+  - sh: cd ${APPVEYOR_BUILD_FOLDER}
   - prove -v -e "perl6 -Ilib" t/
 
 shallow_clone: true
