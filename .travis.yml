@@ -1,12 +1,13 @@
 env:
   global:
     - TMPDIR=/tmp
+    - RAKUDO_PKG_URL=https://github.com/nxadm/rakudo-pkg/releases/download/v2018.02.1/rakudo-pkg-Ubuntu14.04_2018.02.1-01_amd64.deb
 
 # https://docs.travis-ci.com/user/installing-dependencies/#Installing-Packages-without-an-APT-Repository
 before_install:
   - cd ${TMPDIR}
   # https://github.com/nxadm/rakudo-pkg
-  - wget -O rakudo-pkg.deb https://github.com/nxadm/rakudo-pkg/releases/download/v2018.02.1/rakudo-pkg-Ubuntu14.04_2018.02.1-01_amd64.deb
+  - wget -O rakudo-pkg.deb ${RAKUDO_PKG_URL}
   - ls -l
   - sudo dpkg -i rakudo-pkg.deb
   - export PATH=$PATH:~/.perl6/bin:/opt/rakudo-pkg/bin
