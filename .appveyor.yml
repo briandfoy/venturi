@@ -56,8 +56,10 @@ install:
   - sh: wget -O rakudo-pkg.deb ${RAKUDO_PKG_URL}
   - sh: sudo dpkg -i rakudo-pkg.deb
   - sh: export PATH=$PATH:~/.perl6/bin:/opt/rakudo-pkg/bin
-  - sh: git clone https://github.com/ugexe/zef.git && cd zef && perl6 -Ilib bin/zef install .
   - perl6 -v
+  - sh: git clone https://github.com/ugexe/zef.git && cd zef && perl6 -Ilib bin/zef install .
+  - cd ${APPVEYOR_BUILD_FOLDER}
+  - zef --debug --depsonly install .
 
 build: off
 
