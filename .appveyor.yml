@@ -65,6 +65,7 @@ build: off
 #
 # I'd like to run Devel::Cover and submit to Coveralls too.
 test_script:
+  - cd ${APPVEYOR_BUILD_FOLDER}
   - prove -v -e "perl6 -Ilib" t/
 
 shallow_clone: true
