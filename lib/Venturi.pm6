@@ -68,6 +68,55 @@ class Venturi {
 	method keywords  { self.not-concrete }
 	method fragment  { self.not-concrete }
 
+	method uri-pattern () {
+		state $pattern = rx/
+			^
+			    [ $<scheme> = ( <-[:/?#]>+ ) ':' ]?
+			    [ '//' $<authority> = ( <-[/?#]>* ) ]?
+			$<path>      = ( <-[?#]>* )
+			    [ '?' $<query> = (<-[#]>*) ]?
+			    [ '#' $<fragment>  = (\N*) ]?
+			/;
+
+		$pattern;
+		}
+
+	method parse ( ::?CLASS:U : Str:D $url ) {
+
+=begin rfc3986
+
+https://tools.ietf.org/html/rfc3986
+
+^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?
+ 12            3  4          5       6  7        8 9
+
+    http://www.ics.uci.edu/pub/ietf/uri/#Related
+
+results in the following subexpression matches:
+
+	$1 = http:
+	$2 = http
+	$3 = //www.ics.uci.edu
+	$4 = www.ics.uci.edu
+	$5 = /pub/ietf/uri/
+	$6 = <undefined>
+	$7 = <undefined>
+	$8 = #Related
+	$9 = Related
+
+	scheme    = $2
+	authority = $4
+	path      = $5
+	query     = $7
+	fragment  = $9
+
+=end rfc3986
+
+		$url ~~ $?CLASS.uri-pattern;
+
+  		return $/;
+		}
+
 	method Str (  --> Str:D ) { !!! }
 	method gist ( --> Str:D ) { !!! }
 	}
