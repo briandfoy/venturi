@@ -45,7 +45,7 @@ URI         = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
 class Venturi {
 	has $!scheme;
 
-	method new ( :$scheme is copy --> Venturi:D ) {
+	method new ( :$scheme! is copy --> Venturi:D ) {
 		my $subclass = join '::', 'Venturi', $scheme.lc;
 		try {
 			CATCH {
