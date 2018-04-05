@@ -132,7 +132,7 @@ $*ERR.put: "-----------URL is $url";
 			$hash<userinfo> = utf8_decode( $unescaped ) // $unescaped;
 			if $hash<userinfo> ~~ m/ $<username> = (<-[:]>*) [':' $<password> = (.*)]? / {
 				$hash<username> = ~$<username>;
-				$hash<password> = ~$<password>;
+				$hash<password> = $<password>.defined ?? ~$<password> !! Any;
 				}
 			}
 
