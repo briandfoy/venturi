@@ -123,6 +123,7 @@ $*ERR.put: "-----------URL is $url";
 			$hash<path> = url_escape_path( ~$hash<path> );
 			}
 
+		$hash<fragment> = Any unless try $hash<fragment>.chars;
 		$hash<protocol> = $hash<scheme> ?? $hash<scheme>.lc !! Any;
 		$hash<path_query> = join '?', map { $_ // Empty }, $hash<path query>;
 
