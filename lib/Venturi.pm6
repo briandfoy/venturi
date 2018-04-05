@@ -127,11 +127,9 @@ $*ERR.put: "-----------URL is $url";
 		$hash<path_query> = join '?', map { $_ // Empty }, $hash<path query>;
 
 		if $hash<authority> && $hash<authority> ~~ s/^ $<userinfo> = (<-[@]>*) \@ // {
-			say "userinfo: $<userinfo>";
 			my $unescaped = url_unescape(~$<userinfo>);
 			$hash<userinfo> = utf8_decode( $unescaped ) // $unescaped;
-			say "userinfo: $hash<userinfo>";
-			if $hash<userinfo> ~~ m/ $<username> = (<-[:]>*) ':' $<password> = (.*) / {
+			if $hash<userinfo> ~~ m/ $<username> = (<-[:]>*) [':' $<password> = (.*)]? / {
 				$hash<username> = ~$<username>;
 				$hash<password> = ~$<password>;
 				}
