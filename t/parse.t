@@ -30,26 +30,26 @@ subtest 'class methods with bad args', {
 	}
 
 subtest 'good URL arg', {
-	my $match = $class.parse: $url;
-	isa-ok $match, Match;
-	ok $match.defined, 'Match object is defined';
-	say $match;
+	my $hash = $class.parse: $url;
+	isa-ok $hash, Hash;
+	ok $hash.defined, 'Hash object is defined';
+	say $hash;
 	}
 
 # huh, it always has the path
 subtest 'non-URL args', {
-	my $match = $class.parse: $non-url;
-	isa-ok $match, Match;
-	ok $match.defined, 'Match object is defined';
+	my $hash = $class.parse: $non-url;
+	isa-ok $hash, Hash;
+	ok $hash.defined, 'Hash object is defined';
 	}
 
 subtest 'test the parts', {
-	my $match = $class.parse: $url;
-	isa-ok $match, Match;
-	ok $match.defined, 'Match object is defined';
-	is $match<scheme>, 'http', 'Gets the HTTP scheme';
-	is $match<authority>, 'www.example.org', 'Gets the right domain';
-	is $match<path>, '/', 'Gets the right path';
+	my $hash = $class.parse: $url;
+	isa-ok $hash, Hash;
+	ok $hash.defined, 'Hash object is defined';
+	is $hash<scheme>, 'http', 'Gets the HTTP scheme';
+	is $hash<authority>, 'www.example.org', 'Gets the right domain';
+	is $hash<path>, '/', 'Gets the right path';
 	}
 
 done-testing();

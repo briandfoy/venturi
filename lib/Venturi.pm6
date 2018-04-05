@@ -112,10 +112,79 @@ results in the following subexpression matches:
 
 =end rfc3986
 
-		$url ~~ $?CLASS.uri-pattern;
+$*ERR.put: "-----------URL is $url";
 
-  		return $/;
+		my $match = $url ~~ $?CLASS.uri-pattern;
+
+		my $hash = $match.Hash;
+
+		if $hash<path> {
+			$hash<path> = utf8_decode( url_unescape( ~$hash<path> ) );
+			$hash<path> = url_escape_path( ~$hash<path> );
+			}
+
+		$hash<protocol> = $hash<scheme> ?? $hash<scheme>.lc !! Any;
+		$hash<path_query> = join '?', map { $_ // Empty }, $hash<path query>;
+
+		if $hash<authority> && $hash<authority> ~~ s/^ $<userinfo> = (<-[@]>*) \@ // {
+			say "userinfo: $<userinfo>";
+			my $unescaped = url_unescape(~$<userinfo>);
+			$hash<userinfo> = utf8_decode( $unescaped ) // $unescaped;
+			say "userinfo: $hash<userinfo>";
+			if $hash<userinfo> ~~ m/ $<username> = (<-[:]>*) ':' $<password> = (.*) / {
+				$hash<username> = ~$<username>;
+				$hash<password> = ~$<password>;
+				}
+			}
+
+		my $host-port-map = host_port( $hash<authority> ?? ~$hash<authority> !! '' );
+		$hash<port>       = $host-port-map<port> if $host-port-map<port>;
+		$hash<host>       = $host-port-map<host> if $host-port-map<host>;
+		$hash<ihost>      = encode_ihost($host-port-map<host>);
+		$hash<host_port>  = join ':', map { $_ // Empty }, $hash<ihost port>;
+
+  		return $hash;
 		}
+
+	my sub utf8_decode ( Str:D $string --> Str:D ) {
+		my $buf = Buf.new: $string.comb.map: *.ord;
+		say "Buf is ", $buf.gist;
+		$buf.decode( 'utf-8' );
+		}
+
+	my sub url_unescape ( Str:D $string --> Str:D ) {
+		return $string.subst:
+			rx/ '%' ( <[0..9 a..f A..F]> ** 2 ) /,
+			{ :16(~$0).chr },
+			:g;
+		}
+
+	my sub url_escape_path ( Str:D $string --> Str:D ) {
+		$string.subst:
+			/ ( <-[A .. Z a .. z 0 .. 9 . _ ~ /  ! $ & ' () * + , ; = : @ -]> ) /,
+			{ sprintf '%%' ~ '%02X', $0.Str.ord },
+			:g;
+		}
+
+	my sub host_port ( Str:D $auth is copy --> Map:D ) {
+		my $port;
+		my $host;
+		$port = $<port> if $auth ~~ s/ ':' $<port> = (\d+) $//;
+		$host = url_unescape $auth;
+		Map.new: 'port', $port, 'host', $host;
+		}
+
+	my sub encode_ihost ( Str:D $host ) {
+		use IDNA::Punycode;
+		return $host unless $host ~~ / <-[\x00 .. \x7f]> /;
+
+		return join '.',
+			map { /<-[\x00 .. \x7f]> / ?? encode_punycode($_) !! $_ },
+			$host.split: / '.' /
+		}
+
+
+
 
 	method Str (  --> Str:D ) { !!! }
 	method gist ( --> Str:D ) { !!! }
