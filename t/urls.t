@@ -232,8 +232,6 @@ subtest 'IDNA (snowman)', {
 	is $hash.<fragment>, '☃', 'right fragment';
 	}
 
-=begin finish
-
 # IRI/IDNA
 subtest 'IRI/IDNA', {
 	my $hash = $class.parse: 'http://☃.net/♥/?q=♥☃';
