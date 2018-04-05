@@ -146,9 +146,11 @@ $*ERR.put: "-----------URL is $url";
 		}
 
 	my sub utf8_decode ( Str:D $string --> Str:D ) {
-		my $buf = Buf.new: $string.comb.map: *.ord;
-		say "Buf is ", $buf.gist;
-		$buf.decode( 'utf-8' );
+		my $buf = Buf.new(
+			$string.comb.map: { $^a.ord < 255 ?? $^a.ord !! $^a.encode('utf8-c8').Slip }
+			);
+		my $d = $buf.decode( 'utf-8' );
+		$d;
 		}
 
 	my sub url_unescape ( Str:D $string --> Str:D ) {
@@ -161,7 +163,13 @@ $*ERR.put: "-----------URL is $url";
 	my sub url_escape_path ( Str:D $string --> Str:D ) {
 		$string.subst:
 			/ ( <-[A .. Z a .. z 0 .. 9 . _ ~ /  ! $ & ' () * + , ; = : @ -]> ) /,
-			{ sprintf '%%' ~ '%02X', $0.Str.ord },
+			{
+			my $m = $0;
+			$m.Str.ord < 255 ??
+				$m.Str.ord.fmt( '%%' ~ '%02X' )
+					!!
+				$m.Str.encode('utf8-c8').map( *.fmt( '%%' ~ '%02X' ) ).join: ''
+			},
 			:g;
 		}
 
