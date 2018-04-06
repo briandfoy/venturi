@@ -119,8 +119,14 @@ $*ERR.put: "-----------URL is $url";
 		my $hash = $match.Hash;
 
 		if $hash<path> {
-			$hash<path> = utf8_decode( url_unescape( ~$hash<path> ) );
-			$hash<path> = url_escape_path( ~$hash<path> );
+			$hash<path> = $hash<path>.Str
+				.split('/')
+				.map( {
+					url_escape_path(
+						utf8_decode( url_unescape( $_ ) )
+						)
+					})
+				.join: '/';
 			}
 
 		if $hash<query> {
@@ -167,7 +173,7 @@ $*ERR.put: "-----------URL is $url";
 
 	my sub url_escape_path ( Str:D $string --> Str:D ) {
 		$string.subst:
-			/ ( <-[A .. Z a .. z 0 .. 9 . _ ~ /  ! $ & ' () * + , ; = : @ -]> ) /,
+			/ ( <-[A .. Z a .. z 0 .. 9 .  _ ~  ! $ & ' () * , ; = : @ - ]> ) /,
 			{
 			my $m = $0;
 			$m.Str.ord < 255 ??

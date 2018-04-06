@@ -408,7 +408,7 @@ subtest 'Heavily escaped path and empty fragment', {
 	is $hash.<port>,     Any,            'no port';
 	is $hash.<query>,    Any,            'no query';
 	is $hash.<fragment>, Any,            'right fragment';
-	is $hash.<path>,     '/mojo%2Fg%2B%2B-4%2E2_4%2E2%2E3-2ubuntu7_i386%2Edeb', 'right path';
+	is $hash.<path>,     '/mojo%2Fg%2B%2B-4.2_4.2.3-2ubuntu7_i386.deb', 'right path';
 	}
 
 # "%" in path
