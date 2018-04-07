@@ -4,7 +4,8 @@
   ],
   "build-depends" : [ ],
   "depends" : [
-  	"JSON::Fast"
+  	"JSON::Fast",
+  	"IDNA::Punycode"
   	],
   "description" : "",
   "license" : "Artistic-2.0",
