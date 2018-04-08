@@ -81,21 +81,6 @@ class Venturi {
 	method keywords  { self.not-concrete }
 	method fragment  { self.not-concrete }
 
-	method uri-pattern () {
-		state $pattern = rx/
-			^
-			    [ $<scheme> = ( <-[:/?#]>+ ) ':' ]?
-			    [ '//' $<authority> = ( <-[/?#]>* ) ]?
-			$<path>      = ( <-[?#]>* )
-			    [ '?' $<query> = (<-[#]>*) ]?
-			    [ '#' $<fragment>  = (\N*) ]?
-			/;
-
-		$pattern;
-		}
-
-	method parse ( ::?CLASS:U : Str:D $url ) {
-
 =begin rfc3986
 
 https://tools.ietf.org/html/rfc3986
@@ -125,7 +110,20 @@ results in the following subexpression matches:
 
 =end rfc3986
 
+	method uri-pattern () {
+		state $pattern = rx/
+			^
+			    [ $<scheme> = ( <-[:/?#]>+ ) ':' ]?
+			    [ '//' $<authority> = ( <-[/?#]>* ) ]?
+			$<path>      = ( <-[?#]>* )
+			    [ '?' $<query> = (<-[#]>*) ]?
+			    [ '#' $<fragment>  = (\N*) ]?
+			/;
 
+		$pattern;
+		}
+
+	method parse ( ::?CLASS:U : Str:D $url ) {
 		my $match = $url ~~ $?CLASS.uri-pattern;
 
 		my $hash = $match.Hash;
