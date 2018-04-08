@@ -211,9 +211,6 @@ results in the following subexpression matches:
 			$host.split: / '.' /
 		}
 
-
-
-
-	method Str (  --> Str:D ) { !!! }
+	method Str ( --> Str:D ) { !!! }
 	method gist ( --> Str:D ) { !!! }
 	}
