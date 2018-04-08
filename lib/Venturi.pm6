@@ -45,7 +45,7 @@ URI         = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
 class Venturi {
 	has $!scheme;
 
-	method new ( :$scheme! is copy --> Venturi:D ) {
+	multi method new ( :$scheme! is copy --> Venturi:D ) {
 		my $subclass = join '::', 'Venturi', $scheme.lc;
 		try {
 			CATCH {
@@ -56,6 +56,19 @@ class Venturi {
 		my $venturi = ::($subclass).new: |%_;
 
 		$venturi;
+		}
+
+	method default-scheme () { 'schemeless' }
+
+	multi method new ( Str:D $url ) {
+		#say "class is $class";
+		my $hash = self.parse: $url;
+
+		$hash.throw unless $hash;
+
+		my $scheme = $hash<scheme> // self.default-scheme;
+
+		self.new: :scheme($scheme);
 		}
 
 	method not-concrete {
