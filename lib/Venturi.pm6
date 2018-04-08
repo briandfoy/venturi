@@ -112,7 +112,6 @@ results in the following subexpression matches:
 
 =end rfc3986
 
-$*ERR.put: "-----------URL is $url";
 
 		my $match = $url ~~ $?CLASS.uri-pattern;
 
