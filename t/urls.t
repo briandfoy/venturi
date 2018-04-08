@@ -5,6 +5,8 @@ use-ok package-name or bail-out "{package-name} did not compile";
 use ::(package-name);
 my $class = ::(package-name);
 
+can-ok $class, 'parse';
+
 # http://cpansearch.perl.org/src/SRI/Mojolicious-7.72/t/mojo/url.t
 
 subtest 'simple', {
