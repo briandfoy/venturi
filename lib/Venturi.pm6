@@ -172,7 +172,7 @@ results in the following subexpression matches:
 
 	my sub url_escape_path ( Str:D $string --> Str:D ) {
 		$string.subst:
-			/ ( <-[A .. Z a .. z 0 .. 9 .  _ ~  ! $ & ' () * , ; = : @ - ]> ) /,
+			/ ( <-[A .. Z a .. z 0 .. 9 . _ ~  ! $ & ' () * , ; = : @ - ]> ) /,
 			{
 			my $m = $0;
 			$m.Str.ord < 255 ??
