@@ -1,5 +1,5 @@
 class Venturi::Query {
-	my $default-separator := ';';
+	my $default-separator := '&';
 	has %!query;
 	has $.separator is rw = $default-separator;
 
