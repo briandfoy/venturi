@@ -128,7 +128,7 @@ subtest 'two-params-one-value', {
 	isa-ok $q.values.[$_],   Array for ^$q.values.elems;
 	is $q.values.[$_].elems, 1, 'Value has 1 element' for ^$q.values.elems;
 
-	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus', 'Query string is correct'
+	is ~$q, 'Hamadryas=perlicus&Juonia=perlicus', 'Query string is correct'
 	}
 
 subtest 'change-separator', {
@@ -143,15 +143,15 @@ subtest 'change-separator', {
 
 	$q.add( $_, $value ) for @params;
 
-	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
+	is ~$q, 'Hamadryas=perlicus&Juonia=perlicus',
 		'Query string with default separator is correct';
 
-	$q.separator = '&';
-	is ~$q, 'Hamadryas=perlicus&Juonia=perlicus',
+	$q.separator = ';';
+	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
 		'Query string with chosen separator is correct';
 
 	$q.separator = $q.default-separator;
-	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
+	is ~$q, 'Hamadryas=perlicus&Juonia=perlicus',
 		'Query string with restored default separator is correct';
 	}
 
