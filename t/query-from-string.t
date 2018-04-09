@@ -92,8 +92,32 @@ subtest ':guess-separator with ;', {
 	is $q.separator, ';', 'Separator is correct';
 	}
 
-# q=%E2%99%A5%E2%98%83
-# q=♥☃
+subtest 'unescaped snowman', {
+	my $string = 'q=♥☃';
+	my $q = $class.from-string: $string;
+	isa-ok $q, $class;
+	object-ok $q;
 
+	is $q.elems,         1,         'Has two elements';
+	is $q.params.elems,  1,         'params has two elements';
+	is $q.params.[0],   'q',        'q param  is correct';
+	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
+
+	is $q.separator, $q.default-separator, 'Separator is correct';
+	}
+
+subtest 'escaped snowman', {
+	my $string = 'q=%E2%99%A5%E2%98%83';
+	my $q = $class.from-string: $string;
+	isa-ok $q, $class;
+	object-ok $q;
+
+	is $q.elems,         1,         'Has two elements';
+	is $q.params.elems,  1,         'params has two elements';
+	is $q.params.[0],   'q',        'q param  is correct';
+	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
+
+	is $q.separator, $q.default-separator, 'Separator is correct';
+	}
 
 done-testing();
