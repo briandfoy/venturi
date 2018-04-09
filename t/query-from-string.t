@@ -103,6 +103,7 @@ subtest 'unescaped snowman', {
 	is $q.params.[0],   'q',        'q param is correct';
 	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
 
+	is ~$q, 'q=%E2%99%A5%E2%98%83', 'Get back escaped query';
 	is $q.separator, $q.default-separator, 'Separator is correct';
 	}
 
@@ -117,6 +118,7 @@ subtest 'escaped snowman', {
 	is $q.params.[0],   'q',        'q param is correct';
 	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
 
+	is ~$q, $string, 'Get back the same query';
 	is $q.separator, $q.default-separator, 'Separator is correct';
 	}
 
