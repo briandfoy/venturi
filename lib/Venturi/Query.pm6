@@ -198,7 +198,7 @@ class Venturi::Query {
 
 	sub encode ( Str:D $s, *%_ () --> Str:D ) {
 		my &code = {
-			$0.Str.encode('utf8-c8').map( '%' ~ *.fmt: '%02x' ).join: ''
+			$0.Str.encode('utf8-c8').map( '%' ~ *.fmt: '%02X' ).join: ''
 			};
 
 		$s.subst:
