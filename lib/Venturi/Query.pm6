@@ -124,6 +124,7 @@ class Venturi::Query {
 
 	method www-form-urlencoded ( *%_ () --> Str:D ) { self.Str }
 
+	# note that Str always url escapes
 	multi method Str ( Any:U : --> Str:D ) { $?CLASS.^name }
 	multi method Str ( Any:D : *%_ () --> Str:D ) {
 		%!query
