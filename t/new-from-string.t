@@ -42,3 +42,5 @@ subtest '/just/the/path', {
 	isa-ok $object, ::(package-name)::schemeless;
 	is $object.scheme, Any, "Scheme is Any ($url)";
 	}
+
+done-testing();
