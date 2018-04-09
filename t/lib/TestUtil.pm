@@ -2,6 +2,16 @@ unit module TestUtils:ver<0.0.1>:auth<github:briandfoy>;
 
 use Test;
 
+sub object-ok ( $object, $label = 'Is an object' )
+	is export(:DEFAULT) {
+	$object.DEFINITE ?? pass( $label ) !! flunk( $label );
+	}
+
+sub type-object-ok ( $object, $label = 'Is a type object' )
+	is export(:DEFAULT) {
+	! $object.DEFINITE ?? pass( $label ) !! flunk( $label );
+	}
+
 sub method-invocant-type-ok ( ) {
 
 	}
