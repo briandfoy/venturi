@@ -15,123 +15,124 @@ subtest 'nothing', {
 	ok $q.DEFINITE, "It's an object";
 	}
 
-subtest 'one-key-one-value', {
-	my $key   = 'Hamadryas';
+subtest 'one-param-one-value', {
+	my $param   = 'Hamadryas';
 	my $value = 'perlicus';
 
-	can-ok $class, $_ for <add elems keys values Str>;
+	can-ok $class, $_ for <add elems params values Str>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $key, $value );
+	$q.add( $param, $value );
 
-	is $q.elems,      1,   'Has one element';
-	is $q.params.elems, 1,   'keys has one element';
-	is $q.params.[0], $key,  'Key is correct';
-	is $q.values.elems, 1, 'values has one element';
-	isa-ok $q.values.[0], Array;
-	is $q.values.[0].elems, 1, 'Value has one element';
+	is $q.elems,            1,       'Has one element';
+	is $q.params.elems,     1,       'params has one element';
+	is $q.params.[0],       $param,  'param is correct';
+	is $q.values.elems,     1,       'values has one element';
+	isa-ok $q.values.[0],   Array;
+	is $q.values.[0].elems, 1,       'Value has one element';
 
 	is ~$q, 'Hamadryas=perlicus', 'Query string is correct'
 	}
 
-subtest 'one-key-clear-all', {
-	my $key   = 'Hamadryas';
+subtest 'one-param-clear-all', {
+	my $param   = 'Hamadryas';
 	my $value = 'perlicus';
 
-	can-ok $class, $_ for <add elems keys values Str clear>;
+	can-ok $class, $_ for <add elems params values Str clear>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $key, $value );
+	$q.add( $param, $value );
 
-	is $q.elems,      1,   'Has one element';
-	is $q.params.elems, 1,   'keys has one element';
-	is $q.params.[0], $key,  'Key is correct';
-	is $q.values.elems, 1, 'values has one element';
-	isa-ok $q.values.[0], Array;
-	is $q.values.[0].elems, 1, 'Value has one element';
+	is $q.elems,            1,       'Has one element';
+	is $q.params.elems,     1,       'params has one element';
+	is $q.params.[0],       $param,  'param is correct';
+	is $q.values.elems,     1,       'values has one element';
+	isa-ok $q.values.[0],   Array;
+	is $q.values.[0].elems, 1,       'Value has one element';
 
 	is ~$q, 'Hamadryas=perlicus', 'Query string is correct';
 
 	$q.clear;
 	is $q.elems,      0,   'Has no elements after clear';
-	is $q.params.elems, 0,   'keys has no elements after clear';
+	is $q.params.elems, 0, 'params has no elements after clear';
 	}
 
-subtest 'one-utf8-key-one-value', {
-	my $key   = 'φ';
+subtest 'one-utf8-param-one-value', {
+	my $param   = 'φ';
 	my $value = 'phi';
 
-	can-ok $class, $_ for <add elems keys values Str>;
+	can-ok $class, $_ for <add elems params values Str>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $key, $value );
+	$q.add( $param, $value );
 
-	is $q.elems,      1,   'Has one element';
-	is $q.params.elems, 1,   'keys has one element';
-	is $q.params.[0], $key,  'Key is correct';
-	is $q.values.elems, 1, 'values has one element';
-	isa-ok $q.values.[0], Array;
-	is $q.values.[0].elems, 1, 'Value has one element';
+	is $q.elems,            1,       'Has one element';
+	is $q.params.elems,     1,       'params has one element';
+	is $q.params.[0],       $param,  'param is correct';
+	is $q.values.elems,     1,       'values has one element';
+	isa-ok $q.values.[0],   Array;
+	is $q.values.[0].elems, 1,       'Value has one element';
 
 	is ~$q, '%cf%86=phi', 'Query string is correct'
 	}
 
-subtest 'one-key-two-values', {
-	my $key    = 'Hamadryas';
+subtest 'one-param-two-values', {
+	my $param    = 'Hamadryas';
 	my @values = <perlicus sixus>;
 
-	can-ok $class, $_ for <add elems keys values Str>;
+	can-ok $class, $_ for <add elems params values Str>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $key, $_ ) for @values;
+	$q.add( $param, $_ ) for @values;
 
-	is $q.elems,      1,   'Has one element';
-	is $q.params.elems, 1,   'keys has one element';
-	is $q.params.[0], $key,  'Key is correct';
-	is $q.values.elems, 1, 'values has one element';
-	isa-ok $q.values.[0], Array;
-	is $q.values.[0].elems, 2, 'Value has two elements';
+	is     $q.elems,            1,      'Has one element';
+	is     $q.params.elems,     1,      'params has one element';
+	is     $q.params.[0],       $param, 'param is correct';
+	is     $q.values.elems,     1,      'values has one element';
+	isa-ok $q.values.[0],       Array;
+	is     $q.values.[0].elems, 2,      'Value has two elements';
 
-	is ~$q, 'Hamadryas=perlicus;Hamadryas=sixus', 'Query string is correct'
+	is ~$q, 'Hamadryas=perlicus&Hamadryas=sixus', 'Query string is correct'
 	}
 
-subtest 'two-keys-one-value', {
-	my @keys  = <Hamadryas Juonia>.sort;
+subtest 'two-params-one-value', {
+	my @params  = <Hamadryas Juonia>.sort;
 	my $value = 'perlicus';
 
-	can-ok $class, $_ for <add elems keys values Str>;
+	can-ok $class, $_ for <add elems params values Str>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $_, $value ) for @keys;
+	$q.add( $_, $value ) for @params;
 
-	is $q.elems,      2,   'Has two elements';
-	is $q.params.elems, 2,   'keys has two elements';
-	is $q.params.[0], @keys.[0],  'Key 0 is correct';
-	is $q.params.[1], @keys.[1],  'Key 1 is correct';
-	is $q.values.elems, 2, 'values has two elements';
-	isa-ok $q.values.[$_], Array for ^$q.values.elems;
+	is $q.elems,             2,            'Has two elements';
+	is $q.params.elems,      2,            'params has two elements';
+	is $q.params.[0],        @params.[0],  'param 0 is correct';
+	is $q.params.[1],        @params.[1],  'param 1 is correct';
+	is $q.values.elems,      2,            'values has two elements';
+
+	isa-ok $q.values.[$_],   Array for ^$q.values.elems;
 	is $q.values.[$_].elems, 1, 'Value has 1 element' for ^$q.values.elems;
 
 	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus', 'Query string is correct'
 	}
 
 subtest 'change-separator', {
-	my @keys  = <Hamadryas Juonia>.sort;
+	my @params  = <Hamadryas Juonia>.sort;
 	my $value = 'perlicus';
 
 	can-ok $class, $_ for <add separator Str>;
@@ -140,7 +141,7 @@ subtest 'change-separator', {
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $_, $value ) for @keys;
+	$q.add( $_, $value ) for @params;
 
 	is ~$q, 'Hamadryas=perlicus;Juonia=perlicus',
 		'Query string with default separator is correct';
@@ -155,7 +156,7 @@ subtest 'change-separator', {
 	}
 
 subtest 'new-with-separator', {
-	my @keys  = <Hamadryas Juonia>.sort;
+	my @params  = <Hamadryas Juonia>.sort;
 	my $value = 'perlicus';
 
 	can-ok $class, $_ for <new add Str>;
@@ -164,38 +165,38 @@ subtest 'new-with-separator', {
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $_, $value ) for @keys;
+	$q.add( $_, $value ) for @params;
 
 	is ~$q, 'Hamadryas=perlicus#Juonia=perlicus',
 		'Query string with constructor-specified separator is correct';
 	}
 
-subtest 'two-keys-remove-one', {
-	my @keys  = <Hamadryas Juonia>.sort;
+subtest 'two-params-remove-one', {
+	my @params  = <Hamadryas Juonia>.sort;
 	my $value = 'perlicus';
 
-	can-ok $class, $_ for <add elems keys values Str remove>;
+	can-ok $class, $_ for <add elems params values Str remove>;
 
 	my $q = $class.new;
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	$q.add( $_, $value ) for @keys;
+	$q.add( $_, $value ) for @params;
 
 	is $q.elems,      2,   'Has two elements';
-	is $q.params.elems, 2,   'keys has two elements';
-	is $q.params.[0], @keys.[0],  'Key 0 is correct';
-	is $q.params.[1], @keys.[1],  'Key 1 is correct';
+	is $q.params.elems, 2,   'params has two elements';
+	is $q.params.[0], @params.[0],  'param 0 is correct';
+	is $q.params.[1], @params.[1],  'param 1 is correct';
 
-	$q.remove( @keys.[1] );
+	$q.remove( @params.[1] );
 
 	is $q.elems,      1,   'Has one element';
-	is $q.params.elems, 1,   'keys has one element';
-	is $q.params.[0], @keys.[0],  'Key 0 is correct';
+	is $q.params.elems, 1,   'params has one element';
+	is $q.params.[0], @params.[0],  'param 0 is correct';
 	}
 
 subtest 'from-hash', {
-	can-ok $class, $_ for <from-hash keys>;
+	can-ok $class, $_ for <from-hash params>;
 
 	my %hash = %(
 		'Hamadryas' => 'perlicus',
@@ -206,7 +207,7 @@ subtest 'from-hash', {
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	is $q.params.elems, 2, 'Has the right number of keys';
+	is $q.params.elems, 2, 'Has the right number of params';
 	}
 
 subtest 'from-hash-with-array', {
@@ -221,7 +222,7 @@ subtest 'from-hash-with-array', {
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
 
-	is $q.params.elems, 2, 'Has the right number of keys';
+	is $q.params.elems, 2, 'Has the right number of params';
 	}
 
 subtest 'Str', {
