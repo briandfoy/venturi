@@ -3,6 +3,17 @@ class Venturi::Query {
 	has %!query;
 	has $.separator is rw = $default-separator;
 
+	# assume string is URL encoded
+	method from-string (
+	    Str:D $string,
+		Bool  :$url-encoded = False,
+		Str:D :$separator    = '&',
+		*%_ () --> Venturi::Query ) {
+		my $query = self.new;
+
+		my @pairs = $query.split( $separator ).map{ *.split( '=' ).slip };
+		}
+
 	method from-hash ( %args, *%_ () --> Venturi::Query ) {
 		my $query = self.new;
 		for %args.keys -> $key {
