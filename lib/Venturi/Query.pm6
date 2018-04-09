@@ -6,12 +6,54 @@ class Venturi::Query {
 	# assume string is URL encoded
 	method from-string (
 	    Str:D $string,
-		Bool  :$url-encoded = False,
-		Str:D :$separator    = '&',
+		Bool  :$url-encoded    = False,
+		Str:D :$separator      = $default-separator,
+		Bool :$guess-separator = False,
 		*%_ () --> Venturi::Query ) {
 		my $query = self.new;
 
-		my @pairs = $query.split( $separator ).map{ *.split( '=' ).slip };
+		if $guess-separator {
+			my $guess = self.guess-separator: $string;
+			if $guess {
+				$query.separator = $guess;
+				}
+			else {
+				warn "Could not guess query separator. Using $separator";
+				$query.separator = $separator;
+				}
+			}
+		else {
+			$query.separator = $separator;
+			}
+
+		my @pairs = $string.split( $query.separator );
+		for @pairs -> $pair {
+			use Venturi::Util;
+			my @vals = $pair.split: / '=' /;
+			my $param = utf8_decode( url_unescape( @vals[0] ) );
+			my $value = utf8_decode( url_unescape( @vals[1] ) );
+			$query.add: $param, $value;
+			}
+
+		$query;
+		}
+
+	#`( should I fail here instead of returning a type object? )
+	method guess-separator ( Str:D $string --> Str ) {
+		#`( possible forms:
+			one pair (no separator)  key=value
+			two pair (one separator) key=valueSEPkey=value
+			no values                key=
+			                         key=&key=
+		)
+		unless $string ~~ / '=' <-[ = ]>+ '=' / {
+			return Str
+			};
+		do given $string {
+			when / '&' / { '&' }
+			when / ';' / { ';' }
+			default      { Str }
+			}
 		}
 
 	method from-hash ( %args, *%_ () --> Venturi::Query ) {
