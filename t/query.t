@@ -235,8 +235,6 @@ subtest 'Str', {
 	my $q = $class.from-hash( %hash );
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
-
-	note $q.Str;
 	}
 
 subtest 'www-form-encoded', {
@@ -265,8 +263,6 @@ subtest 'gist', {
 	my $q = $class.from-hash( %hash );
 	isa-ok $q, $class;
 	ok $q.DEFINITE, "It's an object";
-
-	note( $q.gist )
 	}
 
 subtest 'Hash', {
@@ -286,8 +282,6 @@ subtest 'Hash', {
 
 	my %hash = $q.Hash;
 	isa-ok %hash, 'Hash', 'Assigning to a hash returns a hash';
-
-	note( $q.gist )
 	}
 
 subtest 'json', {
@@ -305,10 +299,6 @@ subtest 'json', {
 	isa-ok %hash, 'Hash', '.Hash returns a hash';
 
 	ok $q.DEFINITE, "It's an object";
-
-	note( $q.json );
-
-	note( $q.json: :compact )
 	}
 
 done-testing();
