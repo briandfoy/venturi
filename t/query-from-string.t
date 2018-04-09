@@ -100,7 +100,7 @@ subtest 'unescaped snowman', {
 
 	is $q.elems,         1,         'Has two elements';
 	is $q.params.elems,  1,         'params has two elements';
-	is $q.params.[0],   'q',        'q param  is correct';
+	is $q.params.[0],   'q',        'q param is correct';
 	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
 
 	is $q.separator, $q.default-separator, 'Separator is correct';
@@ -114,7 +114,7 @@ subtest 'escaped snowman', {
 
 	is $q.elems,         1,         'Has two elements';
 	is $q.params.elems,  1,         'params has two elements';
-	is $q.params.[0],   'q',        'q param  is correct';
+	is $q.params.[0],   'q',        'q param is correct';
 	is $q.value-for($q.params.[0]), '♥☃', 'Value is correct';
 
 	is $q.separator, $q.default-separator, 'Separator is correct';
