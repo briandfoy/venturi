@@ -82,7 +82,7 @@ subtest 'one-utf8-param-one-value', {
 	isa-ok $q.values.[0],   Array;
 	is $q.values.[0].elems, 1,       'Value has one element';
 
-	is ~$q, '%cf%86=phi', 'Query string is correct'
+	is ~$q, '%CF%86=phi', 'Query string is correct'
 	}
 
 subtest 'one-param-two-values', {
